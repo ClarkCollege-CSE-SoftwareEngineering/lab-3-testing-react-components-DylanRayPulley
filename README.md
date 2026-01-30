@@ -1,3 +1,42 @@
+Dylan Pulley
+1/29/2026
+
+
+Reflection Section (minimum 200 words) answering:
+
+Using getByRole and getByLabelText makes tests more reliable than getByTestId because they target what the user would see when interacting with the page such as a visible label, or the role that the element takes on, such as a button, or textbox. This can allow the structure and size of the project and the tests to grow without requiring refactoring on previous tests. getByTestId depends on a value assigned to it, and when refactoring the code this can lead to breaks in tests and structure that require time to fix, making it less reliable.
+
+queryBy would want to be used instead of getBy in situations where a testing element may not be present during runtime. getBy will throw an error immediately if nothing is found, vs queryBy returns null. This can be useful for testing elements that may only appear for a short time such as a loading wheel. 
+
+One of the main tradeoff of mocking API calls vs testing in a real back end, is that while mocking, you are not verifying real integration behavior, and it doesn't account for any issue that could arise if they aren't already accounted before ahead of time. Inversely the tradeoff for using real back end testing is that this can be slower, and more difficult to set up and you have to work with due to the dependencies of the the system you are connecting to, as well as there is a possible element of cost for usage that could be factored in 
+
+
+Key Concepts section listing 3-5 concepts you learned
+	1. The difference between getBy, findyBy, and queryBy 
+	2. use findBy when async testing 
+	3. getByRole and getByLabelText help create user centered tests
+
+1.🤔 Reflection Question: Notice how we're using getByRole with accessible names like name: /delete "task to delete"/i. How does this approach differ from using getByTestId('delete-button')? Which approach better reflects how users interact with the UI? (Hint: Consider Kent C. Dodds' guiding principle from your readings.)
+
+
+getByRole differs in that it locates the elements based on their role over their direct ID, which is more user-centric, as it focuses on how a user would interact with the page, where as getByTestId only functions off a predefined testing id that wouldn't be something a user would interact with. Usage of getByRole can also help with later refactoring and expansion of the code base and tests as well. 
+
+
+2.🤔 Reflection Question: We used queryByRole('alert') instead of getByRole('alert') when checking that an error message does NOT exist. Why? What would happen if we used getByRole for an element that doesn't exist?
+
+
+If we used getByRole the function could throw an error immediately as the element could possibly not exist during the time of checking. queryByRole on the other hand will return null. 
+
+
+3.🤔 Reflection Question: Compare how we used screen.findByText (returns a Promise, waits for element) versus screen.getByText (synchronous, throws immediately if not found). When should you use each? How does this connect to the discussion of findBy queries in the React Testing Library documentation?
+
+
+The main difference between these two functions is that screen.getByText is a synchronous function where as screen.findByText is an asynchronous function. getByText should be used in cases where all elements are present at runtime, where as findByText is better used in cases where a testing elements appears during run time
+
+
+
+
+
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/OFlm_OiO)
 # Lab 3: Testing React Components
 
@@ -351,6 +390,8 @@ describe('TaskItem', () => {
 
 🤔 **Reflection Question:** Notice how we're using `getByRole` with accessible names like `name: /delete "task to delete"/i`. How does this approach differ from using `getByTestId('delete-button')`? Which approach better reflects how users interact with the UI? (Hint: Consider Kent C. Dodds' guiding principle from your readings.)
 
+getByRole differs in that it locates the elements based on their role over their direct ID, which is more user-centric, as it focuses on how a user would interact with the page, where as getByTestId only functions off a predefined testing id that wouldn't be something a user would interact with. Usage of getByRole can also help with later refactoring and expansion of the code base and tests as well. 
+
 ---
 
 ## Part 3: Testing Forms with User Events (25 minutes)
@@ -567,6 +608,8 @@ describe('AddTaskForm', () => {
 ✅ **Checkpoint:** Run `npm test` — all tests should pass (15+ tests now).
 
 🤔 **Reflection Question:** We used `queryByRole('alert')` instead of `getByRole('alert')` when checking that an error message does NOT exist. Why? What would happen if we used `getByRole` for an element that doesn't exist?
+
+If we used getByRole the function could throw an error immediately as the element could possibly not exist during the time of checking. queryByRole on the other hand will return null. 
 
 ---
 
@@ -894,6 +937,8 @@ describe('TaskList', () => {
 ✅ **Checkpoint:** Run `npm test` — all tests should pass.
 
 🤔 **Reflection Question:** Compare how we used `screen.findByText` (returns a Promise, waits for element) versus `screen.getByText` (synchronous, throws immediately if not found). When should you use each? How does this connect to the discussion of `findBy` queries in the React Testing Library documentation?
+
+The main difference between these two functions is that screen.getByText is a synchronous function where as screen.findByText is an asynchronous function. getByText should be used in cases where all elements are present at runtime, where as findByText is better used in cases where a testing elements appears during run time
 
 ---
 
